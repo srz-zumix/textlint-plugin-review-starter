@@ -23,6 +23,7 @@ export function parseAsChunks(text) {
   //console.log(lines);
   var startIndex = 0;
   var currentChunk = null;
+  var isComment = false;
 
   const chunks = lines.reduce(function (result, currentLine, index) {
     const line = {
@@ -49,14 +50,34 @@ export function parseAsChunks(text) {
     // NOTE: comment does not break current chunk, i.e. a block can contain comments in its body.
     if (line.text.startsWith('#@')) {
       line.isComment = true;
-      if (currentChunk) {
-        currentChunk.lines.push(line);
+      if (line.text.startsWith('#@+++')) {
+        isComment = true;
+        if (currentChunk == null) {
+          currentChunk = createChunk(ChunkTypes.Comment, line);
+          result.push(currentChunk);
+        }
+      } else if(line.text.startsWith('#@---')) {
+        isComment = false;
+        if (currentChunk && currentChunk.type === ChunkTypes.Comment) {
+          flushChunk(); // end of Comment
+        }
       } else {
-        // A comment line corresponds to a Comment chunk.
-        result.push(createChunk(ChunkTypes.Comment, line));
+        if (currentChunk) {
+          currentChunk.lines.push(line);
+        } else {
+          // A comment line corresponds to a Comment chunk.
+          result.push(createChunk(ChunkTypes.Comment, line));
+        }          
       }
-
       return;
+    }
+
+    if( isComment ) {
+      if (currentChunk) {
+        line.isComment = true;
+        currentChunk.lines.push(line);
+        return;
+      }  
     }
 
     // block content

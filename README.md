@@ -1,6 +1,6 @@
 # textlint-plugin-review-starter
 
-[![Build Status](https://travis-ci.org/srzzumix/textlint-plugin-review-starter.svg?branch=master)](https://travis-ci.org/srzzumix/textlint-plugin-review-starter) [![npm version](https://badge.fury.io/js/textlint-plugin-review-starter.svg)](https://badge.fury.io/js/textlint-plugin-review-starter)
+[![Build Status](https://travis-ci.org/srz-zumix/textlint-plugin-review-starter.svg?branch=main)](https://travis-ci.org/srz-zumix/textlint-plugin-review-starter) [![npm version](https://badge.fury.io/js/textlint-plugin-review-starter.svg)](https://badge.fury.io/js/textlint-plugin-review-starter)
 
 Add [Re:VIEW Starter](hhttps://kauplan.org/reviewstarter/) support for [textlint](https://github.com/textlint/textlint "textlint").
 

@@ -153,6 +153,23 @@ another paragraph`);
                        ['Comment', 'Paragraph', 'Paragraph']);
     });
 
+    it('should ignore #@+++ ~ #@---', function () {
+      const result = parse(`#@+++
+???
+#@---
+test
+paragraph
+#@+++
+!!!
+#@---
+
+another paragraph`);
+      assert(result.children.length === 3);
+      assert(result.children[0].raw.includes('???'));
+      assert.deepEqual(result.children.map(node => node.type),
+                       ['Comment', 'Paragraph', 'Paragraph']);
+    });
+
     it('should not ignore #@warn', function () {
       const result = parse(`test
 paragraph

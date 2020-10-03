@@ -109,8 +109,12 @@ export function parseBlock(chunk) {
  * @return {TxtNode}  node
  */
 export function parseComment(chunk) {
-  assert(chunk.lines.length === 1);
-  const node = createCommentNodeFromLine(chunk.lines[0]);
-
+  // Re:VIEW Starter can block comments
+  //assert(chunk.lines.length === 1);
+  if( chunk.lines.length === 1) {
+    return createCommentNodeFromLine(chunk.lines[0]);
+  }
+  const node = createNodeFromChunk(chunk);
+  node.value = chunk.lines.slice(1,-1).join('');
   return node;
 }
