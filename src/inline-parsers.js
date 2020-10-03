@@ -72,6 +72,9 @@ const InlineParsers = {
   secref:    inlineNonTextTagParser(Syntax.Reference),
   file:      parseKeywordTag,
   hlink:     parseHrefTag,
+  LaTex:     inlineSymbolTagParser('LaTex'),
+  Tex:       inlineSymbolTagParser('LaTex'),
+  hearts:    inlineSymbolTagParser('❤'),
 };
 
 /**
@@ -117,6 +120,16 @@ function inlineTextTagParser(type) {
 function parseInlineNonTextTag(type, tag, context) {
   const node = createInlineNode(type, tag.fullText, context);
   return node;
+}
+
+/**
+ * get text tag parser function.
+ * @param {string} type - type of tag
+ * @return {function} parser function
+ */
+function inlineSymbolTagParser(text) {
+  return (tag, context) =>
+    parseSymbolTag(text, tag, context);
 }
 
 /**
@@ -204,6 +217,19 @@ function parseRubyTag(tag, context) {
   node.rubyText = rubyText;
   node.children = [strNode];
 
+  return node;
+}
+
+/**
+ * parse @<LaTex>{} tag.
+ * @param {string} text - symbol substitute text
+ * @param {Tag} tag - tag to parse
+ * @param {Context} context - context of the node
+ * @return {TxtNode}
+ */
+function parseSymbolTag(text, tag, context) {
+  const node = createInlineNode(Syntax.Symbol, tag.fullText, context);
+  node.value = text;
   return node;
 }
 

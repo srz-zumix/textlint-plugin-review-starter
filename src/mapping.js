@@ -43,6 +43,7 @@ export const Syntax = {
   XXLarge: 'Emphasis', // Starter
   UserInput: 'Emphasis', // Starter
   Cursor: 'Emphasis', // Starter
+  Symbol: 'Emphasis', // Starter
 
   // ReVIEW specific block tags
   // NOTE: 'Block' means review's block having no special meanings, whose children are Paragraphs.
