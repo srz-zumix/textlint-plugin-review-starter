@@ -57,6 +57,21 @@ const InlineParsers = {
   icon:    inlineNonTextTagParser(Syntax.Icon),
   m:       inlineNonTextTagParser(Syntax.Math),
   raw:     inlineNonTextTagParser(Syntax.Raw),
+
+  // Starter
+  B:         inlineTextTagParser(Syntax.Strong),
+  weak:      inlineTextTagParser(Syntax.Weak),
+  small:     inlineTextTagParser(Syntax.Small),
+  xsmall:    inlineTextTagParser(Syntax.XSmall),
+  xxsmall:   inlineTextTagParser(Syntax.XXSmall),
+  large:     inlineTextTagParser(Syntax.Large),
+  xlarge:    inlineTextTagParser(Syntax.XLarge),
+  xxlarge:   inlineTextTagParser(Syntax.XXLarge),
+  userinput: inlineTextTagParser(Syntax.UserInput),
+  cursor:    inlineTextTagParser(Syntax.Cursor),
+  secref:    inlineNonTextTagParser(Syntax.Reference),
+  file:      parseKeywordTag,
+  hlink:     parseHrefTag,
 };
 
 /**

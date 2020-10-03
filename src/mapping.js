@@ -34,6 +34,15 @@ export const Syntax = {
   Emphasis: 'Emphasis',
   TeletypeItalic: 'Emphasis',
   TeletypeBold: 'Strong',
+  Weak: 'Emphasis', // Starter
+  Small: 'Emphasis', // Starter
+  XSmall: 'Emphasis', // Starter
+  XXSmall: 'Emphasis', // Starter
+  Large: 'Emphasis', // Starter
+  XLarge: 'Emphasis', // Starter
+  XXLarge: 'Emphasis', // Starter
+  UserInput: 'Emphasis', // Starter
+  Cursor: 'Emphasis', // Starter
 
   // ReVIEW specific block tags
   // NOTE: 'Block' means review's block having no special meanings, whose children are Paragraphs.
