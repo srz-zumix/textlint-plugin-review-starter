@@ -1,2 +1,48 @@
 # textlint-plugin-review-starter
-textlint plugin to lint Re:VIEW Starter documents
+
+[![Build Status](https://travis-ci.org/srzzumix/textlint-plugin-review-starter.svg?branch=master)](https://travis-ci.org/srzzumix/textlint-plugin-review-starter) [![npm version](https://badge.fury.io/js/textlint-plugin-review-starter.svg)](https://badge.fury.io/js/textlint-plugin-review-starter)
+
+Add [Re:VIEW Starter](hhttps://kauplan.org/reviewstarter/) support for [textlint](https://github.com/textlint/textlint "textlint").
+
+What is textlint plugin? Please see https://github.com/textlint/textlint/blob/master/docs/plugin.md
+
+
+## Installation
+
+    npm install textlint-plugin-review-starter
+
+## Usage
+
+Manually add review plugin to your `.textlintrc` like:
+
+```json
+{
+    "plugins": [
+        "review-starter"
+    ]
+}
+```
+
+Lint Re:VIEW Starter file with textlint:
+
+```
+$ textlint ch01.re
+```
+
+## Tests
+
+    npm test
+
+## Contributing
+
+1. Fork it!
+2. Create your feature branch: `git checkout -b my-new-feature`
+3. Commit your changes: `git commit -am 'Add some feature'`
+4. Push to the branch: `git push origin my-new-feature`
+5. Submit a pull request :D
+
+## License
+
+MIT
+
+If you distribute iutest, you might enjoy the [LICENSE-MIXING](LICENSE-MIXING) document.
