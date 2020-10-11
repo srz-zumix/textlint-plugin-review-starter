@@ -4,6 +4,8 @@
 
 Add [Re:VIEW Starter](hhttps://kauplan.org/reviewstarter/) support for [textlint](https://github.com/textlint/textlint "textlint").
 
+forked from [textlint-plugin-review](https://github.com/orangain/textlint-plugin-review)
+
 What is textlint plugin? Please see https://github.com/textlint/textlint/blob/master/docs/plugin.md
 
 ## Installation
