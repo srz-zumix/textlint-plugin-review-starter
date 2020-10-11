@@ -1,18 +1,18 @@
 {
-  "name": "textlint-plugin-review",
+  "name": "textlint-plugin-review-starter",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/orangain/textlint-plugin-review.git"
+    "url": "https://github.com/srz-zumix/textlint-plugin-review-starter"
   },
-  "author": "orangain",
-  "email": "orangain@gmail.com",
-  "homepage": "https://github.com/orangain/textlint-plugin-review",
+  "author": "srz_zumix",
+  "email": "zumix.cpp@gmail.com",
+  "homepage": "https://github.com/srz-zumix/textlint-plugin-review-starter",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/orangain/textlint-plugin-review/issues"
+    "url": "https://github.com/srz-zumix/textlint-plugin-review-starter/issues"
   },
-  "version": "0.4.1",
-  "description": "textlint Re:VIEW processsor plugin.",
+  "version": "0.1.0",
+  "description": "textlint Re:VIEW Starter processsor plugin.",
   "main": "lib/index.js",
   "files": [
     "lib",
