@@ -73,7 +73,7 @@ const InlineParsers = {
   file:      parseKeywordTag,
   hlink:     parseHrefTag,
   LaTex:     inlineSymbolTagParser('LaTex'),
-  Tex:       inlineSymbolTagParser('LaTex'),
+  Tex:       inlineSymbolTagParser('Tex'),
   hearts:    inlineSymbolTagParser('❤'),
 };
 
@@ -242,6 +242,10 @@ function parseSymbolTag(text, tag, context) {
 export function parseText(text, context) {
   assert(!text.match(/[\r\n]/));
 
+  return parseNestedText(text, context, 0)
+}
+
+export function parseNestedText(text, context, depth) {
   const nodes = [];
   let tag;
   while (tag = findInlineTag(text)) {
@@ -253,12 +257,21 @@ export function parseText(text, context) {
 
     const parser = InlineParsers[tag.name];
     if (parser) {
+      let nestedContext = Object.assign({}, context);
+      nestedContext = offsetContext(nestedContext, tag.content.startIndex)
+      const nestedNodes = parseNestedText(tag.content.raw, nestedContext, depth + 1)
       const node = parser(tag, contextNeedsUnescapeBraces(context));
+      if( nestedNodes ) {
+        node.children = nestedNodes
+      }
       nodes.push(node);
     }
-
     context = offsetContext(context, tag.fullText.length);
     text = tag.followingText;
+  }
+
+  if (depth > 0 && !nodes.length) {
+    return null;
   }
 
   if (text.length) {

@@ -6,7 +6,6 @@ Add [Re:VIEW Starter](hhttps://kauplan.org/reviewstarter/) support for [textlint
 
 What is textlint plugin? Please see https://github.com/textlint/textlint/blob/master/docs/plugin.md
 
-
 ## Installation
 
     npm install textlint-plugin-review-starter
@@ -28,6 +27,26 @@ Lint Re:VIEW Starter file with textlint:
 ```
 $ textlint ch01.re
 ```
+
+## Re:VIEW Starter Extensions
+
+* Inline command
+  * fence `$|`
+  * Nested inline command
+  * B
+  * weak
+  * small,xsmall,xxsmall
+  * large,xlarge,xxlarge
+  * userinput
+  * cursor
+  * secref
+  * file
+  * hlink
+  * LaTex,Tex,hearts
+* Block command
+  * abstract
+  * terminal
+  * sideimage
 
 ## Tests
 

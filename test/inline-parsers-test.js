@@ -66,6 +66,54 @@ describe('inline-parsers', function () {
       assert(strong.children[0].loc.start.column === 8);
     });
 
+    it('should parse inline tag with $ fence', function () {
+      const nodes = parseText(`AAA@<b>$BBB$CCC`, context);
+      assert(nodes.length === 3);
+      assert.deepEqual(nodes.map(node => node.type),
+                       ['Str', 'Strong', 'Str']);
+      assert.deepEqual(nodes.map(node => node.raw),
+                       ['AAA', '@<b>$BBB$', 'CCC']);
+      const strong = nodes[1];
+      assert(strong.children.length === 1);
+      assert(strong.children[0].type === 'Str');
+      assert(strong.children[0].loc.start.line === 1);
+      assert(strong.children[0].loc.start.column === 8);
+    });
+
+    it('should parse inline tag with | fence', function () {
+      const nodes = parseText(`AAA@<b>|BBB|CCC`, context);
+      assert(nodes.length === 3);
+      assert.deepEqual(nodes.map(node => node.type),
+                       ['Str', 'Strong', 'Str']);
+      assert.deepEqual(nodes.map(node => node.raw),
+                       ['AAA', '@<b>|BBB|', 'CCC']);
+      const strong = nodes[1];
+      assert(strong.children.length === 1);
+      assert(strong.children[0].type === 'Str');
+      assert(strong.children[0].loc.start.line === 1);
+      assert(strong.children[0].loc.start.column === 8);
+    });
+
+    it('should parse nested inline tag', function () {
+      const nodes = parseText(`@<i>{AAA@<b>{BBB}CCC}`, context);
+      assert(nodes.length === 1);
+      assert.deepEqual(nodes.map(node => node.type),
+                       ['Emphasis' ]);
+      assert.deepEqual(nodes.map(node => node.raw),
+                       ['@<i>{AAA@<b>{BBB}CCC}']);
+      const itaric = nodes[0].children;
+      assert(itaric.length === 3);
+      assert.deepEqual(itaric.map(node => node.type),
+                       ['Str', 'Strong', 'Str']);
+      assert.deepEqual(itaric.map(node => node.raw),
+                       ['AAA', '@<b>{BBB}', 'CCC']);
+      const strong = itaric[1];
+      assert(strong.children.length === 1);
+      assert(strong.children[0].type === 'Str');
+      assert(strong.children[0].loc.start.line === 1);
+      assert(strong.children[0].loc.start.column === 13);
+    });
+
     it('should parse inline tags contains escape character', function () {
       const nodes = parseText(`AAA@<b>{BB\\}B}CCC`, context);
       assert(nodes.length === 3);
