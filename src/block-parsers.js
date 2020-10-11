@@ -36,6 +36,11 @@ export const BlockParsers = {
   important: withCaption(0, parseShortColumn),
   caution: withCaption(0, parseShortColumn),
   notice: withCaption(0, parseShortColumn),
+
+  // Starter
+  abstract: parseLead,
+  terminal: parseCodeBlock,
+  sideimage: withCaption(null, parseImage),
 };
 
 /**

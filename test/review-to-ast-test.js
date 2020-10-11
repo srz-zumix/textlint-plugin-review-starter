@@ -153,6 +153,24 @@ another paragraph`);
                        ['Comment', 'Paragraph', 'Paragraph']);
     });
 
+    // Starter
+    it('should ignore #@+++ ~ #@---', function () {
+      const result = parse(`#@+++
+???
+#@---
+test
+paragraph
+#@+++
+!!!
+#@---
+
+another paragraph`);
+      assert(result.children.length === 3);
+      assert(result.children[0].raw.includes('???'));
+      assert.deepEqual(result.children.map(node => node.type),
+                       ['Comment', 'Paragraph', 'Paragraph']);
+    });
+
     it('should not ignore #@warn', function () {
       const result = parse(`test
 paragraph
@@ -552,6 +570,28 @@ You need to install python.
       assert(lead.children.length === 1);
       assert(lead.children[0].type === 'Paragraph');
       assert(lead.children[0].raw === `You need to install python.`);
+    });
+
+    // Starter
+    it('should split paragraphend', function() {
+      const result = parse(`
+Before
+//paragraphend
+After
+`);
+      assert(result.children.length === 2);
+      assert(result.children[0].type === 'Paragraph');
+      assert(result.children[0].raw === `Before`);
+    });
+
+    it('should substitute LaTex', function() {
+      const result = parse(`
+Before@<LaTex>{}After
+`);
+      assert(result.children.length === 1);
+      const lead = result.children[0];
+      assert(lead.type === 'Paragraph');
+      assert(lead.children[1].value === 'LaTex');
     });
   });
 });

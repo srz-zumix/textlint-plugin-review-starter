@@ -26,3 +26,9 @@ You can write @<b>{inline} tags @<code>{var a = 1}.
 @<ruby>{Matsumoto, Matz} is a father of Ruby language.
 
 //footnote[smtp][@<href>{https://ja.wikipedia.org/wiki/Simple_Mail_Transfer_Protocol}]
+
+== for Re:VIEW Starter
+
+//abstract{
+Thanks to everyone.
+//}

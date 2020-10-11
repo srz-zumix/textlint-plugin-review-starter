@@ -57,6 +57,24 @@ const InlineParsers = {
   icon:    inlineNonTextTagParser(Syntax.Icon),
   m:       inlineNonTextTagParser(Syntax.Math),
   raw:     inlineNonTextTagParser(Syntax.Raw),
+
+  // Starter
+  B:         inlineTextTagParser(Syntax.Strong),
+  weak:      inlineTextTagParser(Syntax.Weak),
+  small:     inlineTextTagParser(Syntax.Small),
+  xsmall:    inlineTextTagParser(Syntax.XSmall),
+  xxsmall:   inlineTextTagParser(Syntax.XXSmall),
+  large:     inlineTextTagParser(Syntax.Large),
+  xlarge:    inlineTextTagParser(Syntax.XLarge),
+  xxlarge:   inlineTextTagParser(Syntax.XXLarge),
+  userinput: inlineTextTagParser(Syntax.UserInput),
+  cursor:    inlineTextTagParser(Syntax.Cursor),
+  secref:    inlineNonTextTagParser(Syntax.Reference),
+  file:      parseKeywordTag,
+  hlink:     parseHrefTag,
+  LaTex:     inlineSymbolTagParser('LaTex'),
+  Tex:       inlineSymbolTagParser('Tex'),
+  hearts:    inlineSymbolTagParser('❤'),
 };
 
 /**
@@ -102,6 +120,16 @@ function inlineTextTagParser(type) {
 function parseInlineNonTextTag(type, tag, context) {
   const node = createInlineNode(type, tag.fullText, context);
   return node;
+}
+
+/**
+ * get text tag parser function.
+ * @param {string} type - type of tag
+ * @return {function} parser function
+ */
+function inlineSymbolTagParser(text) {
+  return (tag, context) =>
+    parseSymbolTag(text, tag, context);
 }
 
 /**
@@ -193,6 +221,19 @@ function parseRubyTag(tag, context) {
 }
 
 /**
+ * parse @<LaTex>{} tag.
+ * @param {string} text - symbol substitute text
+ * @param {Tag} tag - tag to parse
+ * @param {Context} context - context of the node
+ * @return {TxtNode}
+ */
+function parseSymbolTag(text, tag, context) {
+  const node = createInlineNode(Syntax.Symbol, tag.fullText, context);
+  node.value = text;
+  return node;
+}
+
+/**
  * parse inline tags and StrNodes from line.
  * @param {string} text - Text of the line
  * @param {Context} context - context of the node
@@ -201,6 +242,10 @@ function parseRubyTag(tag, context) {
 export function parseText(text, context) {
   assert(!text.match(/[\r\n]/));
 
+  return parseNestedText(text, context, 0)
+}
+
+export function parseNestedText(text, context, depth) {
   const nodes = [];
   let tag;
   while (tag = findInlineTag(text)) {
@@ -212,12 +257,21 @@ export function parseText(text, context) {
 
     const parser = InlineParsers[tag.name];
     if (parser) {
+      let nestedContext = Object.assign({}, context);
+      nestedContext = offsetContext(nestedContext, tag.content.startIndex)
+      const nestedNodes = parseNestedText(tag.content.raw, nestedContext, depth + 1)
       const node = parser(tag, contextNeedsUnescapeBraces(context));
+      if( nestedNodes ) {
+        node.children = nestedNodes
+      }
       nodes.push(node);
     }
-
     context = offsetContext(context, tag.fullText.length);
     text = tag.followingText;
+  }
+
+  if (depth > 0 && !nodes.length) {
+    return null;
   }
 
   if (text.length) {

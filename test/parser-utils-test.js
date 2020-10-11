@@ -48,6 +48,8 @@ describe('parser-utils', function () {
       assert.deepEqual(tag, {
         name: 'b',
         content: {
+          startIndex: 8,
+          closeIndex: 11,
           raw: 'BBB',
           index: 5,
         },
@@ -62,6 +64,8 @@ describe('parser-utils', function () {
       assert.deepEqual(tag, {
         name: 'b',
         content: {
+          startIndex: 8,
+          closeIndex: 13,
           raw: 'BB\\}B',
           index: 5,
         },
@@ -76,6 +80,8 @@ describe('parser-utils', function () {
       assert.deepEqual(tag, {
         name: 'b',
         content: {
+          startIndex: 8,
+          closeIndex: 11,
           raw: 'BBB',
           index: 5,
         },

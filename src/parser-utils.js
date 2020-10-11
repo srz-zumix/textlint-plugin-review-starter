@@ -28,13 +28,22 @@ export function parseBlockArgs(argsText, offset) {
   return args;
 }
 
+function getCloseBracket(character) {
+  if( character == '{' ) {
+    return '}';
+  }
+  return character;
+}
+
 /**
  * find inline tag from text
  * @param {string} text - Text to parse
  * @return {Tag} the first Tag object if inline tag found, otherwise null
  */
 export function findInlineTag(text) {
-  const match = text.match(/@<(\w+)>\{/);
+  // const match = text.match(/@<(#{\w})>(?:(\$)|(?:({)|(\|)))((?:.*@<\w*>[\|${].*?[\|$}].*?|.*?)*)(?(1)(\$)|(?(2)(})|(\|)))/);
+  // const match = text.match(/@<(\w+)>\{/);
+  const match = text.match(/@<(\w+)>([\{\|\$])/);
   if (!match) {
     return null; // inline tag not found
   }
@@ -42,9 +51,19 @@ export function findInlineTag(text) {
   // We need to ignore escaped closing brace \}.
   // As look-behind expression is relatively new, use indexOf()
   let contentStartIndex = match.index + match[0].length;
-  let closeIndex = findCloseBracket(text, '}', contentStartIndex);
+  const bracket = match[2];
+  let closeIndex = findCloseBracket(text, getCloseBracket(bracket), contentStartIndex);
   if (closeIndex < 0) {
     return null; // not found
+  }
+  const nest = findInlineTag(text.substr(contentStartIndex))
+  if (nest) {
+    if( contentStartIndex + nest.content.startIndex < closeIndex ) {
+      closeIndex = findCloseBracket(text, getCloseBracket(bracket), contentStartIndex + nest.content.closeIndex + 1);
+      if (closeIndex < 0) {
+        return null; // not found
+      }
+    }
   }
 
   const contentCloseIndex = closeIndex - 1;
@@ -53,7 +72,9 @@ export function findInlineTag(text) {
     name: match[1],
     content: {
       raw: rawContent,
-      index: contentStartIndex - match.index,
+      startIndex: contentStartIndex,
+      closeIndex: closeIndex,
+      index: match[0].length,
     },
     fullText: text.substr(match.index, closeIndex - match.index + 1),
     precedingText: text.substr(0, match.index),
