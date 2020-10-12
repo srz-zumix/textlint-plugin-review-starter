@@ -32,6 +32,8 @@
     "plugin",
     "review",
     "re:view",
+    "review-starter",
+    "re:view-starter",
     "lint"
   ],
   "devDependencies": {
