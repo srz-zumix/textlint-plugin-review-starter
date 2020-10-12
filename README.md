@@ -66,4 +66,4 @@ $ textlint ch01.re
 
 MIT
 
-If you distribute textlint-plugin-review-starter, you might enjoy the [LICENSE-MIXING](LICENSE-MIXING) document.
+If you distribute textlint-plugin-review-starter, you might enjoy the [LICENSE-MIXING](docs/LICENSE-MIXING) document.
