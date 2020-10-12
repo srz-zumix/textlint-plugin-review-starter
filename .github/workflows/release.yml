@@ -22,7 +22,7 @@ jobs:
         run: |
           npx can-npm-publish
           TAG=$(cat package.json | grep version | cut -d " " -f 4 | tr -d "," | tr -d '"')
-          if [ "${GITHUB_REF}" != "refs/tags/v${TAGE}" ]; then exit 1; fi
+          if [ "${GITHUB_REF}" != "refs/tags/v${TAG}" ]; then exit 1; fi
       - name: test
         run: npm run test
       - name: build
