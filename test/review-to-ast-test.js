@@ -125,6 +125,7 @@ continuation line`);
       const code = paragraph.children[0];
       assert(code.type === 'Code');
       assert(code.raw === '@<code>{var a = 1}');
+      assert(code.value === 'var a = 1');
     });
 
     it('should parse @<br>{} as a Break', function () {

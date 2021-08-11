@@ -34,6 +34,11 @@ export const Syntax = {
   Emphasis: 'Emphasis',
   TeletypeItalic: 'Emphasis',
   TeletypeBold: 'Strong',
+  Insert: 'Emphasis',
+  Delete: 'Emphasis',
+  Index: 'Emphasis',
+  Ballon: 'Emphasis',
+  DoubleQuote: 'Str', // Starter
   Weak: 'Emphasis', // Starter
   Small: 'Emphasis', // Starter
   XSmall: 'Emphasis', // Starter
@@ -61,6 +66,7 @@ export const Syntax = {
   Reference: 'Reference',
   Ruby: 'Ruby', // ruby in Japanese
   UnicodeChar: 'NonString',
+  Hide: 'NonString',
   Icon: 'Image',
   Math: 'NonString',
   Raw: 'NonString',

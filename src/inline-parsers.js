@@ -33,6 +33,10 @@ const InlineParsers = {
   tti:     inlineTextTagParser(Syntax.TeletypeItalic),
   ttb:     inlineTextTagParser(Syntax.TeletypeBold),
   tcy:     inlineTextTagParser(Syntax.TateChuYoko),
+  ins:     inlineTextTagParser(Syntax.Insert),
+  del:     inlineTextTagParser(Syntax.Delete),
+  idx:     inlineTextTagParser(Syntax.Index),
+  balloon: inlineTextTagParser(Syntax.Ballon),
 
   // partially text tags
   kw:      parseKeywordTag,
@@ -46,9 +50,13 @@ const InlineParsers = {
   list:    inlineNonTextTagParser(Syntax.Reference),
   img:     inlineNonTextTagParser(Syntax.Reference),
   table:   inlineNonTextTagParser(Syntax.Reference),
+  eq:      inlineNonTextTagParser(Syntax.Reference),
   hd:      inlineNonTextTagParser(Syntax.Reference),
   column:  inlineNonTextTagParser(Syntax.Reference),
   fn:      inlineNonTextTagParser(Syntax.Reference),
+  w:       inlineNonTextTagParser(Syntax.Reference),
+  wb:      inlineNonTextTagParser(Syntax.Reference),
+  hidx:    inlineNonTextTagParser(Syntax.Hide),
 
   code:    withValue(inlineNonTextTagParser(Syntax.Code)),
   comment: withValue(inlineNonTextTagParser(Syntax.Comment)),
@@ -57,6 +65,7 @@ const InlineParsers = {
   icon:    inlineNonTextTagParser(Syntax.Icon),
   m:       inlineNonTextTagParser(Syntax.Math),
   raw:     inlineNonTextTagParser(Syntax.Raw),
+  embed:   inlineNonTextTagParser(Syntax.Raw),
 
   // Starter
   B:         inlineTextTagParser(Syntax.Strong),
@@ -69,7 +78,12 @@ const InlineParsers = {
   xxlarge:   inlineTextTagParser(Syntax.XXLarge),
   userinput: inlineTextTagParser(Syntax.UserInput),
   cursor:    inlineTextTagParser(Syntax.Cursor),
+  term:      inlineTextTagParser(Syntax.Index),
+  termnoidx: inlineNonTextTagParser(Syntax.Hide),
   secref:    inlineNonTextTagParser(Syntax.Reference),
+  W:         inlineNonTextTagParser(Syntax.Reference),
+  par:       inlineNonTextTagParser(Syntax.Break),
+  qq:        translateWithValue(inlineTextTagParser(Syntax.DoubleQuote), (v) => { return `"${v}"` }),
   file:      parseKeywordTag,
   hlink:     parseHrefTag,
   LaTex:     inlineSymbolTagParser('LaTex'),
@@ -83,9 +97,18 @@ const InlineParsers = {
  * @return {function} parser function
  */
 function withValue(inlineParser) {
+  return translateWithValue(inlineParser, (v) => { return v })
+}
+
+/**
+ * get new inline tag parser to get value attribute.
+ * @param {function} inlineParser - Parser function of a inline tag
+ * @return {function} parser function
+ */
+ function translateWithValue(inlineParser, translateValue) {
   return (tag, context) => {
     const node = inlineParser(tag, context);
-    node.value = unescapeValue(tag.content.raw, context);
+    node.value = translateValue(unescapeValue(tag.content.raw, context));
     return node;
   };
 }
