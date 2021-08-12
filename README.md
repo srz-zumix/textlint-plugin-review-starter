@@ -37,19 +37,27 @@ $ textlint ch01.re
   * fence `$|`
   * Nested inline command
   * B
+  * W
   * weak
   * small,xsmall,xxsmall
   * large,xlarge,xxlarge
   * userinput
   * cursor
   * secref
+  * term
+  * termnoidx
+  * par
+  * qq
   * file
   * hlink
   * LaTex,Tex,hearts
 * Block command
   * abstract
-  * terminal
+  * chapterauthor
+  * output
+  * program
   * sideimage
+  * terminal
 
 ## Tests
 
