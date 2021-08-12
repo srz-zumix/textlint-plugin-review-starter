@@ -39,8 +39,11 @@ export const BlockParsers = {
 
   // Starter
   abstract: parseLead,
-  terminal: parseCodeBlock,
+  chapterauthor: parseLead,
+  output: withCaption(1, parseCodeBlock),
+  program: withCaption(1, parseCodeBlock),
   sideimage: withCaption(null, parseImage),
+  terminal: parseCodeBlock,
 };
 
 /**

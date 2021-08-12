@@ -11,7 +11,7 @@
   "bugs": {
     "url": "https://github.com/srz-zumix/textlint-plugin-review-starter/issues"
   },
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "textlint Re:VIEW Starter processsor plugin.",
   "main": "lib/index.js",
   "files": [
@@ -47,7 +47,7 @@
     "eslint": "^7.11.0",
     "mocha": "^8.1.3",
     "power-assert": "^1.6.1",
-    "textlint": "^11.7.6",
+    "textlint": "^12.0.2",
     "textlint-filter-rule-comments": "^1.2.2",
     "textlint-rule-no-todo": "^2.0.1"
   },

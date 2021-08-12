@@ -152,6 +152,15 @@ describe('inline-parsers', function () {
       assert(link.children[0].loc.start.column === 37);
     });
 
+    it('should parse qq as a quoted string', function () {
+      const nodes = parseText(`@<qq>{Apple}`, context);
+      assert(nodes.length === 1);
+      const qq = nodes[0]
+      assert(qq.type === 'Str');
+      assert(qq.raw === '@<qq>{Apple}')
+      assert(qq.value === '"Apple"')
+    })
+
     it('should parse href tag as a Link node with label contains escape character', function () {
       const nodes = parseText(`See: @<href>{http://www.google.com/, {google\\}}.`, context);
       assert(nodes.length === 3);
