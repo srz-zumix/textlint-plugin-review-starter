@@ -12,12 +12,16 @@ export const BlockParsers = {
   footnote: parseFootnote,
   quote: parseQuote,
 
+  bibpaper: withCaption(1, parseCodeBlock),
   list: withCaption(1, parseCodeBlock),
   listnum: withCaption(1, parseCodeBlock),
   emlist: withCaption(0, parseCodeBlock),
   emlistnum: withCaption(0, parseCodeBlock),
   source: parseCodeBlock,
   cmd: parseCodeBlock,
+  texequation: parseCodeBlock,
+
+  comment: parseCommentBlock,
 
   image: withCaption(1, parseImage),
   indepimage: withCaption(1, parseImage),
@@ -37,13 +41,36 @@ export const BlockParsers = {
   caution: withCaption(0, parseShortColumn),
   notice: withCaption(0, parseShortColumn),
 
-  // Starter
+  embed: parseRawBlock,
+  raw: parseRawBlock,
+
+  // operator
+  blankline: parseOperator("\n"),
+
+  // ---------- Starter ----------
   abstract: parseLead,
   chapterauthor: parseLead,
   output: withCaption(1, parseCodeBlock),
   program: withCaption(1, parseCodeBlock),
   sideimage: withCaption(null, parseImage),
   terminal: parseCodeBlock,
+  desclist: withCaption(0, parseCodeBlock),
+  desc: parseCodeBlock,
+  talklist: withCaption(0, parseCodeBlock),
+  talk: parseCodeBlock,
+
+  // operator
+  centering: parseOperator(null),
+  clearpage: parseOperator(null),
+  flushright: parseOperator(null),
+  makechaptitlepage: parseOperator(null),
+  needvspace: parseOperator(null),
+  noindent: parseOperator(null),
+  paragraphend: parseOperator(null),
+  sampleoutputbegin: parseOperator(null),
+  sampleoutputend: parseOperator(null),
+  tsize: parseOperator(null),
+  vspace: parseOperator(null),
 };
 
 /**
@@ -67,6 +94,23 @@ function withCaption(captionIndex, blockParser) {
       }
     }
 
+    return node;
+  };
+}
+
+/**
+ * parse operator
+ * @param {Block} block - Block to parse
+ * @param {string} text - substitute text
+ * @return {TxtNode}
+ */
+function parseOperator(text) {
+  if( text == null ) {
+    return null
+  }
+  return function (block) {
+    const node = createNodeFromChunk(block.chunk, Syntax.Str);
+    node.value = text;
     return node;
   };
 }
@@ -141,12 +185,30 @@ function parseFootnote(block) {
 }
 
 /**
+ * parse raw block.
+ * @param {Block} block - Block to parse
+ * @return {TxtNode} Raw node
+ */
+ function parseRawBlock(block) {
+  return parseBlockWithContent(block, Syntax.Raw);
+}
+
+/**
  * parse quote block.
  * @param {Block} block - Block to parse
  * @return {TxtNode} BlockQuote node
  */
 function parseQuote(block) {
   return parseBlockWithContent(block, Syntax.Quote);
+}
+
+/**
+ * parse comment block.
+ * @param {Block} block - Block to parse
+ * @return {TxtNode} Comment node
+ */
+ function parseCommentBlock(block) {
+  return parseBlockWithContent(block, Syntax.Comment);
 }
 
 /**
@@ -249,3 +311,6 @@ export function parseBlockArg(type, blockArg, line) {
   return argNode;
 }
 
+export function supportedBlockCommands() {
+  return Object.keys(BlockParsers)
+}
