@@ -585,14 +585,14 @@ After
       assert(result.children[0].raw === `Before`);
     });
 
-    it('should substitute LaTex', function() {
+    it('should substitute LaTeX', function() {
       const result = parse(`
-Before@<LaTex>{}After
+Before@<LaTeX>{}After
 `);
       assert(result.children.length === 1);
       const lead = result.children[0];
       assert(lead.type === 'Paragraph');
-      assert(lead.children[1].value === 'LaTex');
+      assert(lead.children[1].value === 'LaTeX');
     });
   });
 });

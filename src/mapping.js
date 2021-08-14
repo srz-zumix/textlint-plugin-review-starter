@@ -70,4 +70,5 @@ export const Syntax = {
   Icon: 'Image',
   Math: 'NonString',
   Raw: 'NonString',
+  Marker: 'NonString',
 };
