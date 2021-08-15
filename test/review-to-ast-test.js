@@ -597,8 +597,8 @@ Before
 After
 `);
       assert(result.children.length === 2);
-      // assert(result.children[0].type === 'Paragraph');
-      // assert(result.children[0].raw === `Before`);
+      assert(result.children[0].type === 'Paragraph');
+      assert(result.children[0].raw === `Before`);
     });
 
     it('should substitute LaTeX', function() {
