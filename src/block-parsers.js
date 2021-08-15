@@ -56,10 +56,10 @@ export const BlockParsers = {
   program: withCaption(1, parseCodeBlock),
   sideimage: withCaption(null, parseImage),
   terminal: parseCodeBlock,
-  desclist: withCaption(0, parseCodeBlock),
-  desc: parseCodeBlock,
-  talklist: withCaption(0, parseCodeBlock),
-  talk: parseCodeBlock,
+  desc: withCaption(0, parseCodeBlock),
+  desclist: parseCodeBlock,
+  talk: withCaption(1, parseCodeBlock),
+  talklist: parseCodeBlock,
 
   // operator
   centering: parseOperator(null),
