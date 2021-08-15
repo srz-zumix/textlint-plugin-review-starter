@@ -46,6 +46,8 @@ export const BlockParsers = {
 
   // operator
   blankline: parseOperator("\n"),
+  noindent: parseOperator(null),
+  tsize: parseOperator(null),
 
   // ---------- Starter ----------
   abstract: parseLead,
@@ -65,11 +67,9 @@ export const BlockParsers = {
   flushright: parseOperator(null),
   makechaptitlepage: parseOperator(null),
   needvspace: parseOperator(null),
-  noindent: parseOperator(null),
   paragraphend: parseOperator(null),
   sampleoutputbegin: parseOperator(null),
   sampleoutputend: parseOperator(null),
-  tsize: parseOperator(null),
   vspace: parseOperator(null),
 };
 
