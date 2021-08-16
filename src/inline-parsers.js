@@ -89,7 +89,6 @@ const InlineParsers = {
   // partially text tags
   file:      parseKeywordTag,
   hlink:     parseHrefTag,
-  yomi:      parseRubyTag,
 
   // non-text tags (reference)
   noteref:   inlineNonTextTagParser(Syntax.Reference),

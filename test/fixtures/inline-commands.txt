@@ -62,4 +62,3 @@ xlarge
 xsmall
 xxlarge
 xxsmall
-yomi
