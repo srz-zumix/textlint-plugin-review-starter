@@ -22,72 +22,88 @@ export function parseLine(line) {
 
 const InlineParsers = {
   // text tags
-  bou:     inlineTextTagParser(Syntax.Bouten),
   ami:     inlineTextTagParser(Syntax.Amikake),
-  u:       inlineTextTagParser(Syntax.Underline),
   b:       inlineTextTagParser(Syntax.Bold),
-  i:       inlineTextTagParser(Syntax.Italic),
-  strong:  inlineTextTagParser(Syntax.Strong),
-  em:      inlineTextTagParser(Syntax.Emphasis),
-  tt:      inlineTextTagParser(Syntax.Teletype),
-  tti:     inlineTextTagParser(Syntax.TeletypeItalic),
-  ttb:     inlineTextTagParser(Syntax.TeletypeBold),
-  tcy:     inlineTextTagParser(Syntax.TateChuYoko),
-  ins:     inlineTextTagParser(Syntax.Insert),
-  del:     inlineTextTagParser(Syntax.Delete),
-  idx:     inlineTextTagParser(Syntax.Index),
   balloon: inlineTextTagParser(Syntax.Ballon),
+  bou:     inlineTextTagParser(Syntax.Bouten),
+  del:     inlineTextTagParser(Syntax.Delete),
+  em:      inlineTextTagParser(Syntax.Emphasis),
+  i:       inlineTextTagParser(Syntax.Italic),
+  idx:     inlineTextTagParser(Syntax.Index),
+  ins:     inlineTextTagParser(Syntax.Insert),
+  strong:  inlineTextTagParser(Syntax.Strong),
+  tt:      inlineTextTagParser(Syntax.Teletype),
+  ttb:     inlineTextTagParser(Syntax.TeletypeBold),
+  tti:     inlineTextTagParser(Syntax.TeletypeItalic),
+  tcy:     inlineTextTagParser(Syntax.TateChuYoko),
+  u:       inlineTextTagParser(Syntax.Underline),
 
   // partially text tags
+  href:    parseHrefTag,
   kw:      parseKeywordTag,
   ruby:    parseRubyTag,
-  href:    parseHrefTag,
 
-  // non-text tags
+  // non-text tags (reference)
+  bib:     inlineNonTextTagParser(Syntax.Reference),
   chap:    inlineNonTextTagParser(Syntax.Reference),
-  title:   inlineNonTextTagParser(Syntax.Reference),
   chapref: inlineNonTextTagParser(Syntax.Reference),
-  list:    inlineNonTextTagParser(Syntax.Reference),
-  img:     inlineNonTextTagParser(Syntax.Reference),
-  table:   inlineNonTextTagParser(Syntax.Reference),
-  eq:      inlineNonTextTagParser(Syntax.Reference),
-  hd:      inlineNonTextTagParser(Syntax.Reference),
   column:  inlineNonTextTagParser(Syntax.Reference),
+  eq:      inlineNonTextTagParser(Syntax.Reference),
   fn:      inlineNonTextTagParser(Syntax.Reference),
+  hd:      inlineNonTextTagParser(Syntax.Reference),
+  img:     inlineNonTextTagParser(Syntax.Reference),
+  list:    inlineNonTextTagParser(Syntax.Reference),
+  table:   inlineNonTextTagParser(Syntax.Reference),
+  title:   inlineNonTextTagParser(Syntax.Reference),
   w:       inlineNonTextTagParser(Syntax.Reference),
   wb:      inlineNonTextTagParser(Syntax.Reference),
-  hidx:    inlineNonTextTagParser(Syntax.Hide),
 
+  // non-text tags
+  br:      inlineNonTextTagParser(Syntax.Break),
   code:    withValue(inlineNonTextTagParser(Syntax.Code)),
   comment: withValue(inlineNonTextTagParser(Syntax.Comment)),
-  uchar:   inlineNonTextTagParser(Syntax.UnicodeChar),
-  br:      inlineNonTextTagParser(Syntax.Break),
+  embed:   inlineNonTextTagParser(Syntax.Raw),
+  hidx:    inlineNonTextTagParser(Syntax.Hide),
   icon:    inlineNonTextTagParser(Syntax.Icon),
   m:       inlineNonTextTagParser(Syntax.Math),
   raw:     inlineNonTextTagParser(Syntax.Raw),
-  embed:   inlineNonTextTagParser(Syntax.Raw),
+  uchar:   inlineNonTextTagParser(Syntax.UnicodeChar),
 
-  // Starter
+  // ---------- Starter ----------
+
+  // text tags
   B:         inlineTextTagParser(Syntax.Strong),
+  cursor:    inlineTextTagParser(Syntax.Cursor),
+  qq:        translateWithValue(inlineTextTagParser(Syntax.DoubleQuote), (v) => { return `"${v}"` }),
+  term:      inlineTextTagParser(Syntax.Index),
+  userinput: inlineTextTagParser(Syntax.UserInput),
   weak:      inlineTextTagParser(Syntax.Weak),
+
   small:     inlineTextTagParser(Syntax.Small),
   xsmall:    inlineTextTagParser(Syntax.XSmall),
   xxsmall:   inlineTextTagParser(Syntax.XXSmall),
   large:     inlineTextTagParser(Syntax.Large),
   xlarge:    inlineTextTagParser(Syntax.XLarge),
   xxlarge:   inlineTextTagParser(Syntax.XXLarge),
-  userinput: inlineTextTagParser(Syntax.UserInput),
-  cursor:    inlineTextTagParser(Syntax.Cursor),
-  term:      inlineTextTagParser(Syntax.Index),
-  termnoidx: inlineNonTextTagParser(Syntax.Hide),
-  secref:    inlineNonTextTagParser(Syntax.Reference),
-  W:         inlineNonTextTagParser(Syntax.Reference),
-  par:       inlineNonTextTagParser(Syntax.Break),
-  qq:        translateWithValue(inlineTextTagParser(Syntax.DoubleQuote), (v) => { return `"${v}"` }),
+
+  // partially text tags
   file:      parseKeywordTag,
   hlink:     parseHrefTag,
-  LaTex:     inlineSymbolTagParser('LaTex'),
-  Tex:       inlineSymbolTagParser('Tex'),
+
+  // non-text tags (reference)
+  noteref:   inlineNonTextTagParser(Syntax.Reference),
+  secref:    inlineNonTextTagParser(Syntax.Reference),
+  W:         inlineNonTextTagParser(Syntax.Reference),
+
+  // non-text tags
+  foldhere:  inlineNonTextTagParser(Syntax.Marker),
+  nop:       inlineNonTextTagParser(Syntax.Nop),
+  par:       inlineNonTextTagParser(Syntax.Break),
+  termnoidx: inlineNonTextTagParser(Syntax.Hide),
+
+  // symbols
+  LaTeX:     inlineSymbolTagParser('LaTeX'),
+  TeX:       inlineSymbolTagParser('TeX'),
   hearts:    inlineSymbolTagParser('❤'),
 };
 
@@ -305,3 +321,6 @@ export function parseNestedText(text, context, depth) {
   return nodes;
 }
 
+export function supportedInlineCommands() {
+  return Object.keys(InlineParsers)
+}
