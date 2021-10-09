@@ -179,7 +179,7 @@ second line`);
       assert(list.type === 'OrderedList');
     });
 
-    it('should parse lines starting with : as a DefinitionList', function () {
+    it('should parse lines starting with \s: as a DefinitionList', function () {
       const chunks = parseAsChunks(`
  : Alpha
     DEC の作っていた RISC CPU。
@@ -188,6 +188,23 @@ second line`);
     IBM とモトローラが共同製作した RISC CPU。
     派生として POWER PC がある。
  : SPARC
+    Sun が作っている RISC CPU。
+    CPU 数を増やすのが得意。
+`);
+      assert(chunks.length === 1);
+      const list = chunks[0];
+      assert(list.type === 'DefinitionList');
+    });
+
+    it('should parse lines starting with : as a DefinitionList', function () {
+      const chunks = parseAsChunks(`
+: Alpha
+    DEC の作っていた RISC CPU。
+    浮動小数点数演算が速い。
+: POWER
+    IBM とモトローラが共同製作した RISC CPU。
+    派生として POWER PC がある。
+: SPARC
     Sun が作っている RISC CPU。
     CPU 数を増やすのが得意。
 `);

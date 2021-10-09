@@ -137,7 +137,7 @@ export function parseAsChunks(text) {
     }
 
     // definition list
-    if (line.text.match(/^\s+:\s+/)) {
+    if (line.text.match(/^\s*:\s+/)) {
       if (currentChunk && currentChunk.type === ChunkTypes.DefinitionList) {
         currentChunk.lines.push(line);
       } else {
