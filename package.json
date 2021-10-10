@@ -11,7 +11,7 @@
   "bugs": {
     "url": "https://github.com/srz-zumix/textlint-plugin-review-starter/issues"
   },
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "textlint Re:VIEW Starter processsor plugin.",
   "main": "lib/index.js",
   "files": [
@@ -37,15 +37,15 @@
     "lint"
   ],
   "devDependencies": {
-    "@babel/cli": "^7.11.6",
-    "@babel/core": "^7.11.6",
-    "@babel/preset-env": "^7.11.5",
-    "@babel/register": "^7.11.5",
+    "@babel/cli": "^7.15.7",
+    "@babel/core": "^7.15.8",
+    "@babel/preset-env": "^7.15.8",
+    "@babel/register": "^7.15.3",
     "@textlint/kernel": "^12.0.2",
     "babel-plugin-espower": "^3.0.1",
     "babel-preset-power-assert": "^3.0.0",
     "eslint": "^7.11.0",
-    "mocha": "^8.1.3",
+    "mocha": "^9.1.1",
     "power-assert": "^1.6.1",
     "textlint": "^12.0.2",
     "textlint-filter-rule-comments": "^1.2.2",
