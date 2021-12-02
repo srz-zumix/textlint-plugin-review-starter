@@ -53,6 +53,6 @@
   },
   "dependencies": {
     "@textlint/ast-tester": "^12.0.2",
-    "@textlint/ast-traverse": "^2.1.6"
+    "@textlint/ast-traverse": "^12.1.0"
   }
 }
