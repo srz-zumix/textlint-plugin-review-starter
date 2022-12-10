@@ -45,7 +45,7 @@
     "babel-plugin-espower": "^3.0.1",
     "babel-preset-power-assert": "^3.0.0",
     "eslint": "^8.1.0",
-    "mocha": "^9.1.1",
+    "mocha": "^10.1.0",
     "power-assert": "^1.6.1",
     "textlint": "^12.0.2",
     "textlint-filter-rule-comments": "^1.2.2",
