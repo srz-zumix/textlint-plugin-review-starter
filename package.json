@@ -41,7 +41,7 @@
     "@babel/core": "^7.15.8",
     "@babel/preset-env": "^7.15.8",
     "@babel/register": "^7.15.3",
-    "@textlint/kernel": "^12.0.2",
+    "@textlint/kernel": "^13.3.1",
     "babel-plugin-espower": "^3.0.1",
     "babel-preset-power-assert": "^3.0.0",
     "eslint": "^8.1.0",
